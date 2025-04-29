@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../../components/HomeScreen.js';
+import ProPlansScreen from '../../components/ProPage.js';
 
 const Stack = createStackNavigator();
 
@@ -12,6 +13,11 @@ export default function StackNavigator() {
         name="Home" 
         component={HomeScreen} 
         options={{ title: 'JioSaavn Clone' }} 
+      />
+       <Stack.Screen 
+        name="ProPlans" 
+        component={ProPlansScreen} 
+        options={{ title: 'Pro Plans' }} 
       />
     </Stack.Navigator>
   );
