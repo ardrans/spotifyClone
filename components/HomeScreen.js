@@ -41,7 +41,7 @@ export default function HomeScreen({navigation}) {
     <Image source={require('../components/images/jiosaavn-logo-icon-2753629470.png')} style={styles.logo}/>
     <Text style={styles.brandName}>JioSaavn</Text>
     <TouchableOpacity><Text style={styles.menuItem}>Music</Text></TouchableOpacity>
-    <TouchableOpacity><Text style={styles.menuItem}>Podcasts</Text></TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate('Podcasts')}><Text style={styles.menuItem}>Podcasts</Text></TouchableOpacity>
     <TouchableOpacity onPress={() => navigation.navigate('ProPlans')}>
   <Text style={styles.menuItem}>Pro</Text>
 </TouchableOpacity>
