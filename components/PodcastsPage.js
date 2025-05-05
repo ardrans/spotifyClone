@@ -1,34 +1,37 @@
 import React from 'react';
-import { View, Text, TextInput, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const podcastCategories = ['Trending', 'Tech', 'Motivation', 'Comedy', 'News', 'Music'];
+
+const categoryIcons = {
+  Trending: 'flame',
+  Tech: 'hardware-chip',
+  Motivation: 'rocket',
+  Comedy: 'happy',
+  News: 'newspaper',
+  Music: 'musical-notes',
+};
 
 const podcasts = [
   {
     id: '1',
     title: 'Tech Talks Daily',
-    
   },
   {
     id: '2',
     title: 'The Daily Boost',
-    
   },
   {
     id: '3',
     title: 'The Ranveer Show',
-    
   },
-  
 ];
 
 const PodcastCard = ({ podcast }) => (
   <TouchableOpacity style={styles.card}>
-    <Image source={{ uri: podcast.image }} style={styles.image} />
     <View style={styles.info}>
       <Text style={styles.title}>{podcast.title}</Text>
-      <Text style={styles.host}>{podcast.host}</Text>
     </View>
   </TouchableOpacity>
 );
@@ -38,22 +41,17 @@ const PodcastsScreen = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Podcasts</Text>
 
-      <View style={styles.searchContainer}>
-        <Icon name="search-outline" size={20} color="#888" />
-        <TextInput
-          placeholder="Search podcasts"
-          style={styles.searchInput}
-        />
-      </View>
-
+      {/* Category boxes */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryScroll}>
         {podcastCategories.map((cat, index) => (
-          <TouchableOpacity key={index} style={styles.categoryButton}>
-            <Text style={styles.categoryText}>{cat}</Text>
+          <TouchableOpacity key={index} style={styles.categoryBox}>
+            <Icon name={categoryIcons[cat] || 'mic'} size={24} color="#444" style={styles.categoryIcon} />
+            <Text style={styles.categoryLabel}>{cat}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
+      {/* Podcast list */}
       <FlatList
         data={podcasts}
         keyExtractor={(item) => item.id}
@@ -77,31 +75,29 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
   },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    marginBottom: 16,
-  },
-  searchInput: {
-    marginLeft: 8,
-    flex: 1,
-    height: 40,
-  },
   categoryScroll: {
     marginBottom: 16,
   },
-  categoryButton: {
-    backgroundColor: '#eee',
-    borderRadius: 20,
-    paddingHorizontal: 14,
-    paddingVertical: 6,
+  categoryBox: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#f2f2f2',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginRight: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 2,
   },
-  categoryText: {
-    fontSize: 14,
+  categoryIcon: {
+    marginBottom: 5,
+  },
+  categoryLabel: {
+    fontSize: 12,
+    textAlign: 'center',
     color: '#333',
   },
   list: {
@@ -114,21 +110,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     elevation: 2,
-  },
-  image: {
-    width: 80,
-    height: 80,
+    padding: 10,
   },
   info: {
-    padding: 10,
     justifyContent: 'center',
   },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  host: {
-    fontSize: 14,
-    color: '#666',
   },
 });
