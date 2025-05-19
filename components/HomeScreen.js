@@ -1,15 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, Image, TouchableOpacity, TextInput, FlatList } from 'react-native';
 import SearchBar from './SearchBar';
 import SongList from './SongList';
+import * as WebBrowser from 'expo-web-browser';
+import { useGoogleAuth } from './AuthConfig';
 
 
 export default function HomeScreen({navigation}) {
+
+  const { request, response, promptAsync } = useGoogleAuth();
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('Hindi');
   const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    if (response?.type === 'success') {
+      const { authentication } = response;
+      console.log('✅ Google Access Token:', authentication.accessToken);
+    }
+  }, [response]);
+  
 
   const languages = ['Hindi', 'Tamil', 'Malayalam', 'English', 'Telugu'];
 
@@ -79,7 +91,9 @@ export default function HomeScreen({navigation}) {
     )}
 
     <TouchableOpacity><Text style={styles.authButton}>Log In</Text></TouchableOpacity>
-    <TouchableOpacity><Text style={styles.authButton}>Sign Up</Text></TouchableOpacity>
+    <TouchableOpacity onPress={() => promptAsync()}>
+  <Text style={styles.authButton}>Sign Up with Google</Text>
+</TouchableOpacity>
   </View>
 
 </View>

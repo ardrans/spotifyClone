@@ -41,7 +41,6 @@ const PodcastsScreen = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Podcasts</Text>
 
-      {/* Category boxes */}
       <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categoryScroll}>
         {podcastCategories.map((cat, index) => (
           <TouchableOpacity key={index} style={styles.categoryBox}>
@@ -51,7 +50,6 @@ const PodcastsScreen = () => {
         ))}
       </ScrollView>
 
-      {/* Podcast list */}
       <FlatList
         data={podcasts}
         keyExtractor={(item) => item.id}
